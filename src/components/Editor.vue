@@ -3,6 +3,9 @@
     <canvas ref="canvas"></canvas>
     <div ref="qrcode"></div>
     <input v-model="bg" placeholder="bg">
+    <input v-model="title" placeholder="title">
+    <input v-model="creator" placeholder="creator">
+    <input v-model="town" placeholder="town">
     <table>
       <thead>
         <tr>
@@ -41,16 +44,34 @@ import {findRGB} from '../lib/ac_colors';
 
 qrcode.stringToBytes = function(data) { return data; };
 
+let setUint16 = function(buff, offset, n) {
+  buff[offset] = n & 0xFF;
+  buff[offset+1] = n >> 8;
+}
+
+let setStr = function(buff, offset, str, len) {
+  for (let i = 0; i < len / 2; i++){
+    if (i >= str.length){
+      setUint16(buff, offset+i*2, 0, true);
+    } else {
+      setUint16(buff, offset+i*2, str.charCodeAt(i), true);
+    }
+  }
+}
+
 export default {
   props: {
-    init:  Object,
-    edge:   { type: Number, default: 32 },
-    previewRatio: { type: Number, default: 6 }
+    init:       Object,
+    edge:       { type: Number, default: 32 },
+    previewRatio: { type: Number, default: 6 },
   },
   data: function () {
     return {
-      bg: this.init.bg,
-      items: this.init.items,
+      bg:     this.init.bg,
+      items:  this.init.items,
+      title:   'no title',
+      creator: 'aligo',
+      town:    '大岛',
     }
   },
   methods: {
@@ -74,7 +95,22 @@ export default {
       }
 
       let buff = new Uint8Array(620);
+      setUint16(buff, 0x56, 0x3119);
+      buff[0x67] = 0xCC;
+      buff[0x68] = 0x0A;
       buff[0x69] = 0x09;
+      
+      setStr(buff, 0x00, this.title, 40);
+      buff[40] = 0;
+      buff[41] = 0;
+      setUint16(buff, 0x2A, 60598);
+      setStr(buff, 0x2C, this.creator, 20);
+      buff[0x2C+18] = 0;
+      buff[0x2C+19] = 0;
+      setUint16(buff, 0x40, 50500);
+      setStr(buff, 0x42, this.town, 20);
+      buff[0x42+18] = 0;
+      buff[0x42+19] = 0;
 
       // get all pixels
       let pixels = [];

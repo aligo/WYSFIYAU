@@ -1,3 +1,4 @@
+// From: https://github.com/Thulinma/ACNLPatternTool/blob/master/src/libs/ACNLFormat.js#L317
 let paletteColors = [
   //Back in June 2013 when I first made this list, I worked off of a heavily post-processed PHOTOGRAPH of the 3DS screen.
   //Now, in 2020, we have emulators. I took an oversampled screenshot of the editor screen and went through and fixed all these colors by hand.
