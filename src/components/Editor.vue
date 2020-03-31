@@ -1,39 +1,71 @@
 <template>
-  <div class="editor">
-    <canvas ref="canvas"></canvas>
-    <div ref="qrcode"></div>
-    <input v-model="bg" placeholder="bg">
-    <input v-model="title" placeholder="title">
-    <input v-model="creator" placeholder="creator">
-    <input v-model="town" placeholder="town">
-    <table>
-      <thead>
-        <tr>
-          <td>Text</td>
-          <td>Size</td>
-          <td>Color</td>
-          <td>x</td>
-          <td>y</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in items" v-bind:key="index">
-          <td><input v-model="item.t"></td>
-          <td><input v-model="item.fs"></td>
-          <td><input v-model="item.c"></td>
-          <td><input v-model="item.x"></td>
-          <td><input v-model="item.y"></td>
-          <td><button v-on:click="remove(index)">Del</button></td>
-        </tr>
-        <tr>
-          <td colspan="5">
-            <button v-on:click="add">Add</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <section class="nes-container with-title">
+    <h3 class="title">{{title}}</h3>
+    <div class="row">
+      <div class="col">
+        <canvas ref="canvas"></canvas>
+      </div>
+      <div class="col" ref="qrcode"></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="nes-field">
+          <label for="inline_field">Title</label>
+          <input class="nes-input" v-model="title">
+        </div>
+      </div>
+      <div class="col">
+        <div class="nes-field">
+          <label for="inline_field">Background</label>
+          <input class="nes-input" v-model="bg">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="nes-field">
+          <label for="inline_field">Creator</label>
+          <input class="nes-input" v-model="creator">
+        </div>
+      </div>
+      <div class="col">
+        <div class="nes-field">
+          <label for="inline_field">Town</label>
+          <input class="nes-input" v-model="town">
+        </div>
+      </div>
+    </div>
+    <div class="nes-table-responsive">
+      <table class="nes-table is-bordered">
+        <thead>
+          <tr>
+            <td>Text</td>
+            <td>Size</td>
+            <td>Color</td>
+            <td>x</td>
+            <td>y</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in items" v-bind:key="index">
+            <td><input class="nes-input" v-model="item.t"></td>
+            <td><input class="nes-input" v-model="item.fs"></td>
+            <td><input class="nes-input" v-model="item.c"></td>
+            <td><input class="nes-input" v-model="item.x"></td>
+            <td><input class="nes-input" v-model="item.y"></td>
+            <td><button class="nes-btn is-error" v-on:click="remove(index)">Del</button></td>
+          </tr>
+          <tr>
+            <td colspan="5"></td>
+            <td>
+              <button class="nes-btn is-success" v-on:click="add">Add</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </template>
 
 <script>

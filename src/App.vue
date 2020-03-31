@@ -1,10 +1,17 @@
 <template>
-  <div>
+  <div class="container">
+    <h2>WYSFIYAU Editor</h2>
     <Editor
     v-for="(editor, index) in editors"
     v-bind:key="index"
     v-bind:init="editor"
     ></Editor>
+    <div class="mt-container">
+      <a class="with-icon" href="https://github.com/aligo/WYSFIYAU" target="_blank" rel="noopener">
+        <i class="nes-icon github"></i>
+        <span>aligo/WYSFIYAU</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -33,3 +40,26 @@ export default {
   }
 }
 </script>
+
+<style>
+@import "./../node_modules/nes.css/css/nes.css";
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-top: 2.5rem;
+}
+.nes-container, .mt-container {
+  margin-top: 2.5rem;
+}
+.row {
+  display: flex;
+  margin: 0 -0.5rem 0.5rem;
+}
+.col {
+  flex: 1;
+  padding: 0 0.5rem;
+}
+a.with-icon > span {
+  margin-left: 1rem;
+}
+</style>
