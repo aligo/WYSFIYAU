@@ -2,8 +2,9 @@
   <div class="container">
     <h2>WYSFIYAU Editor</h2>
     <p>Why You Steal Flowers Is You Are Ugly Editor (for Animal Crossing)</p>
+    <Splitter v-on:splited="splited" />
     <Editor v-for="(editor, index) in editors"
-      v-bind:key="index" v-bind:idx="index" v-bind:init="editor"
+      v-bind:key="editor.key" v-bind:idx="index" v-bind:init="editor"
     />
     <div class="mt-container">
       <a class="with-icon" href="https://github.com/aligo/WYSFIYAU" target="_blank" rel="noopener">
@@ -16,17 +17,19 @@
 
 <script>
 import Editor from './components/Editor.vue'
+import Splitter from './components/Splitter.vue'
 
 let bgColor = '#ff0000';
 let textColor = '#ffffff';
 
 export default {
   name:       'WYSFIYAU',
-  components: { Editor },
+  components: { Editor, Splitter },
   data() {
     return {
       editors: [
         {
+          key: Math.random(),
           bg: bgColor,
           items: [
             {t: '你丑', fs: 12, x: 4, y: 5, c: textColor },
@@ -34,6 +37,12 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    splited(editors) {
+      while (this.editors.shift());
+      this.editors = editors;
     }
   }
 }
@@ -55,6 +64,12 @@ export default {
 }
 .mb-0 {
   margin-bottom: 0;
+}
+.mb-1 {
+  margin-bottom: 1rem;
+}
+.mt-1 {
+  margin-top: 1rem;
 }
 .col {
   flex: 1;
@@ -79,6 +94,7 @@ input.hide[type=file] {
   opacity: 0;
   position: absolute;
   z-index: -1;
+  top: 0;
 }
 img.preview-img {
   width: 100%;

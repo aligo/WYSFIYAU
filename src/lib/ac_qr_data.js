@@ -4,34 +4,31 @@ export default class AcQrData extends Uint8Array {
     this.initDefaults();
   }
   initDefaults() {
-    this[28] = 0;
-    this[29] = 0;
     this.setUint16(0x56, 0x3119);
     this[0x67] = 0xCC;
     this[0x68] = 0x0A;
     this[0x69] = 0x09;
-    this[0x2C+18] = 0;
-    this[0x2C+19] = 0;
-    this[0x42+18] = 0;
-    this[0x42+19] = 0;
-
-    this.creatorId = 60598;
-    this.townId = 50500;
   }
   set title(title) {
     this.setStr(0x00, title, 40);
+    this[0x28] = 0;
+    this[0x29] = 0;
   }
   set creatorId(creatorId) {
     this.setUint16(0x2A, creatorId);
   }
   set creator(creator) {
-    this.setUint16(0x2C, creator, 20);
+    this.setStr(0x2C, creator, 20);
+    this[0x2C+18] = 0;
+    this[0x2C+19] = 0;
   }
   set townId(townId) {
-    this.setUint16(0x2A, townId);
+    this.setUint16(0x40, townId);
   }
   set town(town) {
-    this.setUint16(0x2C, town, 20);
+    this.setStr(0x42, town, 20);
+    this[0x42+18] = 0;
+    this[0x42+19] = 0;
   }
   set palettes(palettes) {
     for (let i = 0; i < palettes.length; i++){

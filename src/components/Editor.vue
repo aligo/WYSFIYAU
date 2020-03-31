@@ -23,15 +23,35 @@
     </div>
     <div class="row">
       <div class="col">
-        <div class="nes-field">
-          <label>Creator</label>
-          <input class="nes-input" v-model="creator">
+        <div class="row">
+          <div class="col">
+            <div class="nes-field">
+              <label>Creator</label>
+              <input class="nes-input" v-model="creator">
+            </div>
+          </div>
+          <!-- <div class="col">
+            <div class="nes-field">
+              <label>Id</label>
+              <input class="nes-input" v-model="creatorId">
+            </div>
+          </div> -->
         </div>
       </div>
       <div class="col">
-        <div class="nes-field">
-          <label>Town</label>
-          <input class="nes-input" v-model="town">
+        <div class="row">
+          <div class="col">
+            <div class="nes-field">
+              <label>Town</label>
+              <input class="nes-input" v-model="town">
+            </div>
+          </div>
+         <!--  <div class="col">
+            <div class="nes-field">
+              <label>Id</label>
+              <input class="nes-input" v-model="townId">
+            </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -42,8 +62,8 @@
             <td>Text/Image</td>
             <td width="18%"><small>Size/Width</small></td>
             <td width="18%"><small>Color/Height</small></td>
-            <td width="10%">x</td>
-            <td width="10%">y</td>
+            <td width="12%">x</td>
+            <td width="12%">y</td>
             <td width="6%">z</td>
             <td width="6%"></td>
           </tr>
@@ -71,10 +91,10 @@
             <td>
               <div class="row mb-0">
                 <div class="col nes-field">
-                  <label class="nes-btn is-success" v-on:click="addText">Text</label>
+                  <label class="nes-btn is-success" v-on:click="addText">Txt</label>
                 </div>
                 <div class="col nes-field">
-                  <label class="nes-btn is-success" v-bind:for="'add-img-' + idx">Image</label>
+                  <label class="nes-btn is-success" v-bind:for="'add-img-' + idx">Img</label>
                   <input class="hide" accept=".jpg,.png" type="file" v-on:change="addImage" v-bind:id="'add-img-' + idx">
                 </div>
               </div>
@@ -109,12 +129,14 @@ export default {
   },
   data: function () {
     return {
-      bg:       this.init.bg,
-      items:    this.init.items,
-      title:    'no title',
-      creator:  'aligo',
-      town:     '大岛',
-      autoText: ''
+      bg:         this.init.bg,
+      items:      this.init.items,
+      title:      this.init.title || 'no title',
+      creator:    'aligo',
+      creatorId:  60598,
+      town:       '大岛',
+      townId:     50500,
+      autoText:   ''
     }
   },
   methods: {
@@ -159,9 +181,9 @@ export default {
     renderQR() {
       let buff = new AcQrData(620);
       
-      buff.title = this.title;
-      buff.creator = this.creator;
-      buff.town = this.town;
+      ['title', 'creator', 'creatorId', 'town', 'townId'].forEach((k) => {
+        buff[k] = this[k];
+      });
 
       this.acCanvas.readContext();
 

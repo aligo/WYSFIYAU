@@ -2,6 +2,7 @@
 node_modules
 dist/
 gh-pages/
+tmp/
 
 # local env files
 .env.local
