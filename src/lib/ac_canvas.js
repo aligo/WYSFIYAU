@@ -28,9 +28,13 @@ export default class AcCanvas {
     this.ctx.textBaseline = 'top';
     for (var i = 0; i < data.items.length; i++) {
       let item = data.items[i];
-      this.ctx.font = item.fs + 'px ' + fontArgs[fontArgs.length - 1];
-      this.ctx.fillStyle = item.c;
-      this.ctx.fillText(item.t, item.x, item.y);
+      if (item.i) {
+        this.ctx.drawImage(item.i, item.x, item.y, item.width, item.height);
+      } else {
+        this.ctx.font = item.fs + 'px ' + fontArgs[fontArgs.length - 1];
+        this.ctx.fillStyle = item.c;
+        this.ctx.fillText(item.t, item.x, item.y);
+      }
     }
   }
   readContext() {

@@ -39,32 +39,51 @@
       <table class="nes-table is-bordered">
         <thead>
           <tr>
-            <td>Text</td>
-            <td>Size</td>
-            <td>Color</td>
-            <td>x</td>
-            <td>y</td>
-            <td></td>
+            <td>Text/Image</td>
+            <td width="18%"><small>Size/Width</small></td>
+            <td width="18%"><small>Color/Height</small></td>
+            <td width="10%">x</td>
+            <td width="10%">y</td>
+            <td width="6%">z</td>
+            <td width="6%"></td>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in items" v-bind:key="index">
-            <td><input class="nes-input" v-model="item.t"></td>
-            <td><input class="nes-input" v-model="item.fs"></td>
-            <td><input class="nes-input" v-model="item.c"></td>
+            <template v-if="item.i">
+              <td><img class="preview-img" v-bind:src="item.i.src"></td>
+              <td><input class="nes-input" v-model="item.width"></td>
+              <td><input class="nes-input" v-model="item.height"></td>
+            </template>
+            <template v-else>
+              <td><input class="nes-input" v-model="item.t"></td>
+              <td><input class="nes-input" v-model="item.fs"></td>
+              <td><input class="nes-input" v-model="item.c"></td>
+            </template>
             <td><input class="nes-input" v-model="item.x"></td>
             <td><input class="nes-input" v-model="item.y"></td>
-            <td><button class="nes-btn is-error" v-on:click="remove(index)">Del</button></td>
+            <td>
+              <button class="nes-btn" v-on:click="moveDown(index)"><span class="rz90">></span></button>
+            </td>
+            <td><button class="nes-btn is-error" v-on:click="remove(index)">X</button></td>
           </tr>
           <tr>
-            <td colspan="5">
-              <div class="nes-field is-inline">
-                <input class="nes-input" v-model="autoText" placeholder="...auto fit text...">
-                <button class="nes-btn is-success lt-input" v-on:click="autoFitText">Fit</button>
+            <td>
+              <div class="row mb-0">
+                <div class="col nes-field">
+                  <label class="nes-btn is-success" v-on:click="addText">Text</label>
+                </div>
+                <div class="col nes-field">
+                  <label class="nes-btn is-success" v-bind:for="'add-img-' + idx">Image</label>
+                  <input class="hide" accept=".jpg,.png" type="file" v-on:change="addImage" v-bind:id="'add-img-' + idx">
+                </div>
               </div>
             </td>
-            <td>
-              <button class="nes-btn is-success" v-on:click="add">Add</button>
+            <td colspan="6">
+              <div class="nes-field is-inline">
+                <input class="nes-input" v-model="autoText" placeholder="...auto fit text...">
+                <button class="nes-btn is-primary lt-input" v-on:click="autoFitText">Fit</button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -83,6 +102,7 @@ qrcode.stringToBytes = function(data) { return data; };
 
 export default {
   props: {
+    idx:        Number,
     init:       Object,
     edge:       { type: Number, default: 32 },
     previewRatio: { type: Number, default: 6 },
@@ -104,11 +124,34 @@ export default {
         this.items = this.acCanvas.autoFitText(this.autoText, textColor);
       }
     },
-    add() {
+    addText() {
       this.items.push({});
+    },
+    addImage(e) {
+      let file = e.target.files[0],
+          url = window.URL || window.webkitURL,
+          src = url.createObjectURL(file),
+          img = new Image(),
+          vm  = this;
+      img.src = src;
+      img.onload = function() {
+        let width = img.naturalWidth, height = img.naturalHeight;
+        let item = {i: img, x: 0, y: 0};
+        if (width > height) {
+          item.width = vm.edge;
+          item.height = Math.floor(vm.edge * height / width);
+        } else {
+          item.height = vm.edge;
+          item.width = Math.floor(vm.edge * width / height);
+        }
+        vm.items.push(item);
+      }
     },
     remove(index) {
       this.items.splice(index, 1);
+    },
+    moveDown(index) {
+      this.items = this.items.concat(this.items.splice(index, 1));
     },
     renderCanvas() {
       this.acCanvas.renderContext(this);

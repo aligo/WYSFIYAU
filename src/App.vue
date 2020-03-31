@@ -3,7 +3,7 @@
     <h2>WYSFIYAU Editor</h2>
     <p>Why You Steal Flowers Is You Are Ugly Editor (for Animal Crossing)</p>
     <Editor v-for="(editor, index) in editors"
-      v-bind:key="index" v-bind:init="editor"
+      v-bind:key="index" v-bind:idx="index" v-bind:init="editor"
     />
     <div class="mt-container">
       <a class="with-icon" href="https://github.com/aligo/WYSFIYAU" target="_blank" rel="noopener">
@@ -53,6 +53,9 @@ export default {
   display: flex;
   margin: 0 -0.5rem 0.5rem;
 }
+.mb-0 {
+  margin-bottom: 0;
+}
 .col {
   flex: 1;
   padding: 0 0.5rem;
@@ -62,5 +65,22 @@ a.with-icon > span {
 }
 .nes-field.is-inline .lt-input{
   margin-left: 1rem;
+}
+.nes-field {
+  position: relative;
+  overflow: hidden;
+}
+.rz90 {
+  display: block;
+  transform: rotateZ(90deg);
+  margin-left: -0.1rem;
+}
+input.hide[type=file] {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+img.preview-img {
+  width: 100%;
 }
 </style>
