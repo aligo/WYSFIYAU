@@ -8,6 +8,18 @@ export default class AcCanvas {
     this.ctx = ctx;
     this.edge = edge;
   }
+  autoFitText(text, color) {
+    let items = [];
+    let edgeNum = Math.ceil(Math.sqrt(text.length));
+    let fontSize = Math.floor((this.edge - 2) / edgeNum);
+    let margin = Math.ceil((this.edge - edgeNum * fontSize) / 2);
+    for (var i = 0; i < edgeNum; i++) {
+      let row = text.slice(i * edgeNum, (i + 1) * edgeNum);
+      if (row.length > 0)
+        items.push({t: row, c: color, fs: fontSize, x: margin, y: margin + 2 + i * fontSize})
+    }
+    return items;
+  }
   renderContext(data) {
     this.ctx.fillStyle = data.bg;
     this.ctx.fillRect(0, 0, this.edge, this.edge);

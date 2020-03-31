@@ -59,4 +59,7 @@ export default {
 a.with-icon > span {
   margin-left: 1rem;
 }
+.nes-field.is-inline .lt-input{
+  margin-left: 1rem;
+}
 </style>

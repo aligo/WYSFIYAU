@@ -10,13 +10,13 @@
     <div class="row">
       <div class="col">
         <div class="nes-field">
-          <label for="inline_field">Title</label>
+          <label>Title</label>
           <input class="nes-input" v-model="title">
         </div>
       </div>
       <div class="col">
         <div class="nes-field">
-          <label for="inline_field">Background</label>
+          <label>Background</label>
           <input class="nes-input" v-model="bg">
         </div>
       </div>
@@ -24,13 +24,13 @@
     <div class="row">
       <div class="col">
         <div class="nes-field">
-          <label for="inline_field">Creator</label>
+          <label>Creator</label>
           <input class="nes-input" v-model="creator">
         </div>
       </div>
       <div class="col">
         <div class="nes-field">
-          <label for="inline_field">Town</label>
+          <label>Town</label>
           <input class="nes-input" v-model="town">
         </div>
       </div>
@@ -57,7 +57,12 @@
             <td><button class="nes-btn is-error" v-on:click="remove(index)">Del</button></td>
           </tr>
           <tr>
-            <td colspan="5"></td>
+            <td colspan="5">
+              <div class="nes-field is-inline">
+                <input class="nes-input" v-model="autoText" placeholder="...auto fit text...">
+                <button class="nes-btn is-success lt-input" v-on:click="autoFitText">Fit</button>
+              </div>
+            </td>
             <td>
               <button class="nes-btn is-success" v-on:click="add">Add</button>
             </td>
@@ -84,14 +89,21 @@ export default {
   },
   data: function () {
     return {
-      bg:     this.init.bg,
-      items:  this.init.items,
-      title:   'no title',
-      creator: 'aligo',
-      town:    '大岛',
+      bg:       this.init.bg,
+      items:    this.init.items,
+      title:    'no title',
+      creator:  'aligo',
+      town:     '大岛',
+      autoText: ''
     }
   },
   methods: {
+    autoFitText() {
+      if (this.autoText.length > 0) {
+        let textColor = this.items[0].c;
+        this.items = this.acCanvas.autoFitText(this.autoText, textColor);
+      }
+    },
     add() {
       this.items.push({});
     },
