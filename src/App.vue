@@ -1,11 +1,9 @@
 <template>
   <div class="container">
     <h2>WYSFIYAU Editor</h2>
-    <Editor
-    v-for="(editor, index) in editors"
-    v-bind:key="index"
-    v-bind:init="editor"
-    ></Editor>
+    <Editor v-for="(editor, index) in editors"
+      v-bind:key="index" v-bind:init="editor"
+    />
     <div class="mt-container">
       <a class="with-icon" href="https://github.com/aligo/WYSFIYAU" target="_blank" rel="noopener">
         <i class="nes-icon github"></i>
@@ -17,7 +15,6 @@
 
 <script>
 import Editor from './components/Editor.vue'
-
 
 let bgColor = '#ff0000';
 let textColor = '#ffffff';

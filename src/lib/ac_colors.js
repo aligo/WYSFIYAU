@@ -97,4 +97,4 @@ let findRGB = function(rgb) {
   return bestno;
 }
 
-export {findRGB};
+export {findRGB, paletteColors, RGBLookup};
