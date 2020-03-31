@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h2>WYSFIYAU Editor</h2>
+    <p>Why You Steal Flowers Is You Are Ugly Editor (for Animal Crossing)</p>
     <Editor v-for="(editor, index) in editors"
       v-bind:key="index" v-bind:init="editor"
     />
