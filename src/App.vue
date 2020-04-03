@@ -11,6 +11,10 @@
         <i class="nes-icon github"></i>
         <span>aligo/WYSFIYAU</span>
       </a>
+      <a class="with-icon ml-2" href="https://mori.wiki" target="_blank" rel="noopener">
+        <i class="nes-icon coin"></i>
+        <span>mori.wiki</span>
+      </a>
     </div>
   </div>
 </template>
@@ -70,6 +74,9 @@ export default {
 }
 .mt-1 {
   margin-top: 1rem;
+}
+.ml-2 {
+  margin-left: 2rem;
 }
 .col {
   flex: 1;
