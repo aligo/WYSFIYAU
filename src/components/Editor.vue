@@ -3,7 +3,9 @@
     <h3 class="title">{{title}}</h3>
     <div class="row">
       <div class="col">
-        <canvas ref="canvas"></canvas>
+        <div class="canvas-container">
+          <canvas ref="canvas"></canvas>
+        </div>
       </div>
       <div class="col" ref="qrcode"></div>
     </div>
@@ -14,7 +16,8 @@
           <input class="nes-input" v-model="title">
         </div>
       </div>
-      <div class="col">
+      <div class="col tooltip">
+        <div class="tooltiptext">blank for transparency</div>
         <div class="nes-field">
           <label>Background</label>
           <input class="nes-input" v-model="bg">
@@ -78,7 +81,12 @@
             <template v-else>
               <td><input class="nes-input" v-model="item.t"></td>
               <td><input class="nes-input" v-model="item.fs"></td>
-              <td><input class="nes-input" v-model="item.c"></td>
+              <td>
+                <div class="tooltip">
+                  <div class="tooltiptext">blank for transparency</div>
+                  <input class="nes-input" v-model="item.c">
+                </div>
+              </td>
             </template>
             <td><input class="nes-input" v-model="item.x"></td>
             <td><input class="nes-input" v-model="item.y"></td>
